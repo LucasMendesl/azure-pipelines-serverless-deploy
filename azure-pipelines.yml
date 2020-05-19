@@ -10,6 +10,16 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
+- task: TerraformInstaller@0
+  inputs:
+    terraformVersion: '0.12.3'
+
+- script: |
+    terraform init
+    terraform plan
+    terraform apply -var="access_key=$(aws_access_key_id)" -var="secret_key=$(aws_secret_key_id)" -var="env=prod" -auto-approve
+  displayName: 'provision resources (s3 Bucket)'
+
 - task: NodeTool@0
   inputs:
     versionSpec: '12.x'
@@ -17,18 +27,11 @@ steps:
 
 - script: |
     npm install
+    npm install -g serverless
   displayName: 'npm install dependencies'
 
-- task: ArchiveFiles@2
-  inputs:
-    rootFolderOrFile: '$(Build.BinariesDirectory)'
-    includeRootFolder: true
-    archiveType: 'zip'
-    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
-    replaceExistingArchive: true
-  
-- task: PublishBuildArtifacts@1
-  inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: 'drop'
-    publishLocation: 'Container'
+
+- script: |
+    npm run deploy:prod
+  displayName: 'deploy serverless prod' 
+
