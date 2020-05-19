@@ -1,0 +1,29 @@
+{
+  "name": "deploy-serverless-node",
+  "version": "1.0.0",
+  "description": "simple api to demonstrate a ci/cd process using aws and serverless framework",
+  "main": "src/handler.js",
+  "scripts": {
+    "deploy:dev": "sls deploy --stage=dev",
+    "deploy:hml": "sls deploy --stage=hml",
+    "deploy:prod": "sls deploy --stage=prod",
+    "offline": "sls offline --stage=dev"
+  },
+  "keywords": [
+     "nodejs",
+     "serverless",
+     "aws",
+     "playground",
+     "deploy",
+     "azure-devops"
+  ],
+  "author": "Lucas Mendes Loureiro <mendes.lucas2006@hotmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "bluebird": "^3.7.2",
+    "yup": "^0.28.5"
+  },
+  "devDependencies": {
+    "serverless-offline": "^6.1.5"
+  }
+}
