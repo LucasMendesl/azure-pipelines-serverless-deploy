@@ -16,7 +16,6 @@ steps:
 
 - script: |
     terraform init
-    terraform plan
     terraform apply -var="access_key=$(aws_access_key_id)" -var="secret_key=$(aws_secret_key_id)" -var="env=prod" -auto-approve
   displayName: 'provision resources (s3 Bucket)'
 
